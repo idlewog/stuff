@@ -3,5 +3,35 @@
 on commence classique
 
 r2 -d crackme0x05
-aaa
+aaa : analyse
+afll : liste des fonctions
+s main : seek main
+Vpp : debug en visual
+c : cursor suivi de TAB et fleches
+B : Toogle breakpoint
+dc : run
+F4 : normalement run to cursor ...
+s : seek
+S : seek over
+afvd : variable locale
 
+# les arguments sont en EBP+x
+# les locales sont bien // EBP-y
+# les pointeurs "en bas" de l espace libere 
+# et donc en ESP+4 ESP+8
+
+var int local_dh @ ebp-0xd                                                      
+var int local_ch @ ebp-0xc
+var int local_8h @ ebp-0x8
+var int local_4h @ ebp-0x4
+arg int arg_8h @ ebp+0x8
+var int local_4h_2 @ esp+0x4
+var int local_8h_2 @ esp+0x8
+
+en fait dans le cehck il verifie qu il y a bien 16 chiffres
+peut importe leur place ....
+
+ensuite paralell fct avec la chaine saisi
+
+donc 16 digit c est trop gros pour un int ...
+donc on separe...
