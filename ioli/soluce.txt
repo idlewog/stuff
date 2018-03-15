@@ -35,3 +35,24 @@ ensuite paralell fct avec la chaine saisi
 
 donc 16 digit c est trop gros pour un int ...
 donc on separe...
+
+
+la decompile donne 
+
+int32_t parell(int32_t str) {
+    int32_t v1;
+    sscanf((char *)str, "%d", &v1);
+    uint32_t result = v1 % 2; // 0x80484a7  <= le dernier chiffre doit etre paire
+    if (result != 0) {
+        // 0x80484c6
+        return result;
+    }
+    // 0x80484ae
+    printf("Password OK!\n");
+    exit(0);
+    // UNREACHABLE
+}
+
+donc : 22222222 2222 2222 c'est ok
+
+
