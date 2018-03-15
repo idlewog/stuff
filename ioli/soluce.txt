@@ -55,4 +55,11 @@ int32_t parell(int32_t str) {
 
 donc : 22222222 2222 2222 c'est ok
 
+# crackme0x06
+
+on demaree idem 
+
+le premier scan est : %s
+le deuxieme scan est : %d
+
 
