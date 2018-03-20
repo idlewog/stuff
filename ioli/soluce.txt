@@ -28,14 +28,8 @@ arg int arg_8h @ ebp+0x8
 var int local_4h_2 @ esp+0x4
 var int local_8h_2 @ esp+0x8
 
-en fait dans le cehck il verifie qu il y a bien 16 chiffres
-peut importe leur place ....
-
-ensuite paralell fct avec la chaine saisi
-
-donc 16 digit c est trop gros pour un int ...
-donc on separe...
-
+si on analyse correctement ...
+c'est la somme qui doit faire 16
 
 la decompile donne 
 
@@ -54,6 +48,9 @@ int32_t parell(int32_t str) {
 }
 
 donc : 22222222 2222 2222 c'est ok
+par ce que 8X2 ça fait 16 et 2222 est pair
+
+55510 marche aussi
 
 # crackme0x06
 
@@ -62,4 +59,55 @@ on demaree idem
 le premier scan est : %s
 le deuxieme scan est : %d
 
+##### schema de la pile en rentrant dans le main
+
+[esp + 0x10] - envp
+[esp + 0x0c] - argv
+[esp + 0x08] - argc
+[esp + 0x04] - return address
+
+###### la fct dummy
+
+comme dans le 5, sauf fct dummy en plus
+
+on a un strncmp
+==> deux chaines comparee 
+
+|      |:   0x080484e4      ff00           inc dword [eax]
+|      |:   0x080484e6      c74424080300.  mov dword [local_8h], 3
+|      |:   0x080484ee      c74424043887.  mov dword [local_4h_2], str.LOLO
+|      |:   0x080484f6      8b0411         mov eax, dword [ecx + edx]
+|      |:   0x080484f9 b *  890424         mov dword [esp], eax
+|      |:   0x080484fc      e8d7feffff     call sym.imp.strncmp
+
+et eax qui pointe sur :
+
+:> afvd
+var local_4h = 0xffb6c0f4 |0x00000001  ....
+var arg_ch = 0xffb6c104 |0xffb6c28c  .... edx stack R W 0xffb6c5ad -->  
+eax stack R W 0x435f534c (LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:c) -->  ascii
+var local_8h_2 = 0xffb6c0f0 |0xf7764000  .@v. esi
+
+les variables d'env...
+d ou l'appel à check avec 2 param
+
+root@kali:/opt/Workshop2015/IOLI-crackme/bin-linux# LOLO= ./crackme0x06
+IOLI Crackme Level 0x06
+Password: 55510
+Password OK!
+
+##### crackme0x07
+
+idem ...
+sauf stripper 
+
+junk code ...
+mais : 55510 marche ... donc WTF
+
+#### crackme0x08 et 09
+
+idem ...
+quelques fct en plus
+
+bye !
 
